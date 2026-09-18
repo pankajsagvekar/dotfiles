@@ -1,0 +1,457 @@
+/*
+ * ██╗███╗   ██╗██████╗ ██╗   ██╗████████╗
+ * ██║████╗  ██║██╔══██╗██║   ██║╚══██╔══╝
+ * ██║██╔██╗ ██║██████╔╝██║   ██║   ██║
+ * ██║██║╚██╗██║██╔═══╝ ██║   ██║   ██║
+ * ███████╗██║  ██║   ██║   ╚██████╔╝   ██║
+ * ╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝    ╚═╝
+ *
+ * NOCTALIA SHELL FULLY INTEGRATED CONFIG
+ * All third-party tools replaced with native Noctalia commands
+ */
+input {
+  keyboard {
+    xkb {
+      layout "us"
+        }
+    }
+
+  touchpad {
+    tap
+    natural-scroll
+    accel-speed 0.3
+    }
+
+  mouse {
+    accel-speed 0.2
+    }
+
+  workspace-auto-back-and-forth
+  focus-follows-mouse max-scroll-amount="0%"
+}
+window-rule {
+    geometry-corner-radius 7
+    clip-to-geometry true
+    draw-border-with-background false
+    opacity 0.9
+    background-effect {
+        blur true
+    }
+}
+
+window-rule { match app-id=r"foot"; draw-border-with-background false; clip-to-geometry true; opacity 0.9; background-effect { blur true; }; geometry-corner-radius 6; }
+
+// Environment Variables - Optimized for crisp Qt/Kate fonts
+environment {
+  ELECTRON_OZONE_PLATFORM_HINT "auto"
+  EDITOR "nvim"
+  MOZ_ENABLE_WAYLAND "1"
+  SDL_VIDEODRIVER "wayland"
+  GDK_BACKEND "wayland"
+  XDG_SESSION_TYPE "wayland"
+  XDG_CURRENT_DESKTOP "niri"
+  LANG "en_US.UTF-8"
+  QT_QPA_PLATFORMTHEME "qt6ct"
+  QT_STYLE_OVERRIDE "Fusion"
+  QT_ENABLE_HIGHDPI_SCALING "1"
+  QT_QPA_PLATFORM "xcb" // Tells Qt apps like Kate to scale clearly over X11 bridge
+  PROTON_ENABLE_WAYLAND "1"
+
+}
+
+// Autostart - NOCTALIA INTEGRATED & LEAN
+// 1. Sync DBus first with crisp toolkit scaling variables
+spawn-at-startup "bash" "-c" "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=niri QT_ENABLE_HIGHDPI_SCALING=1 QT_QPA_PLATFORM=xcb"
+
+// 2. Load Core System Daemons
+spawn-at-startup "noctalia"
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+spawn-at-startup "~/.config/scripts/battery-monitor.sh"
+spawn-at-startup "/usr/libexec/polkit-mate-authentication-agent-1"
+
+/*
+ * ███╗   ███╗ ██████╗ ███╗   ██╗██╗████████╗ ██████╗ ██████╗
+ * ████╗ ████║██╔═══██╗████╗  ██║██║╚══██╔══╝██╔═══██╗██╔══██╗
+ * ██╔████╔██║██║   ██║██╔██╗ ██║██║   ██║   ██║   ██║██████╔╝
+ * ██║╚██╔╝██║██║   ██║██║╚██╗██║██║   ██║   ██║   ██║██╔══██╝
+ * ██║ ╚═╝ ██║╚██████╔╝██║ ╚████║██║   ██║   ╚██████╔╝██║  ██║
+ * ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
+ */
+
+output "eDP-1" {
+  mode "1920x1200@60.096"
+  scale 1
+  transform "normal"
+}
+
+/*
+ * ██╗      █████╗ ██╗   ██╗ ██████╗ ██╗   ██╗████████╗
+ * ██║     ██╔══██╗╚██╗ ██╔╝██╔═══██╗██║   ██║╚══██╔══╝
+ * ██║     ███████║ ╚████╔╝ ██║   ██║██║   ██║   ██║
+ * ██║     ██╔══██║  ╚██╔╝  ██║   ██║██║   ██║   ██║
+ * ███████╗██║  ██║   ██║   ╚██████╔╝╚██████╔╝   ██║
+ * ╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝  ╚═════╝    ╚═╝
+ */
+
+layout {
+  gaps 9
+  center-focused-column "never"
+  background-color "#000000"
+
+  preset-column-widths {
+    proportion 0.25
+    proportion 0.5
+    proportion 0.75
+    proportion 1.0
+    }
+
+  preset-window-heights {
+    proportion 0.2
+    proportion 0.4
+    proportion 0.5
+    proportion 0.6
+    proportion 0.8
+    }
+
+  default-column-width {
+    proportion 0.5
+    }
+
+  focus-ring {
+    width 2
+    active-color "#cba6f7"
+    inactive-color "#45475A"
+    }
+
+  border {
+    off
+    }
+
+  shadow {
+    on
+    softness 20
+    spread 7
+    offset x=-1 y=-5
+    color "#0009"
+    }
+}
+
+/*
+ * █████╗ ███╗   ██╗██╗███╗   ███╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
+ * ██╔══██╗████╗  ██║██║████╗ ████║██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+ * ███████║██╔██╗ ██║██║██╔████╔██║███████║   ██║   ██║██║   ██║██╔██╗ ██║
+ * ██╔══██║██║╚██╗██║██║██║╚██╔╝██║██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
+ * ██║  ██║██║ ╚████║██║██║ ╚═╝ ██║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
+ * ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+ */
+
+animations {
+  on
+  slowdown 1.2
+
+  window-open {
+    duration-ms 200
+    curve "ease-out-cubic"
+    custom-shader r"
+    vec4 expanding_circle(vec3 coords_geo, vec3 size_geo) {
+      vec3 coords_tex = niri_geo_to_tex * coords_geo;
+      vec4 color = texture2D(niri_tex, coords_tex.st);
+      vec2 coords = (coords_geo.xy - vec2(0.5, 0.5)) * size_geo.xy * 2.0;
+      coords = coords / length(size_geo.xy);
+      float p = niri_clamped_progress;
+      if (p * p <= dot(coords, coords))
+        color = vec4(0.0);
+      return color;
+    }
+
+    vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+      return expanding_circle(coords_geo, size_geo);
+    }
+    "
+    }
+
+  window-close {
+    duration-ms 175
+    curve "ease-out-cubic"
+    custom-shader r"
+    vec4 shrinking_circle(vec3 coords_geo, vec3 size_geo) {
+      vec3 coords_tex = niri_geo_to_tex * coords_geo;
+      vec4 color = texture2D(niri_tex, coords_tex.st);
+      vec2 coords = (coords_geo.xy - vec2(0.5, 0.5)) * size_geo.xy * 2.0;
+      coords = coords / length(size_geo.xy);
+      float p_close = 1.0 - niri_clamped_progress;
+      if (p_close * p_close <= dot(coords, coords))
+        color = vec4(0.0);
+      return color;
+    }
+
+    vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+      return shrinking_circle(coords_geo, size_geo);
+    }"
+    }
+}
+
+/*
+ * NOTE: Workspaces
+ */
+workspace "1"
+workspace "2"
+workspace "3"
+
+
+
+layer-rule {
+  match namespace="gtk-layer-shell"
+  match at-startup=true
+  shadow {
+    on
+    softness 10
+    spread 1
+    offset x=0 y=1
+    draw-behind-window true
+    color "#00000030"
+    }
+}
+
+layer-rule {
+  match namespace="^noctalia-backdrop"
+  place-within-backdrop true
+}
+
+// Floating Noctalia settings window.
+window-rule {
+  match app-id="dev.noctalia.Noctalia"
+  open-floating true
+  default-column-width { fixed 1080; }
+  default-window-height { fixed 920; }
+}
+
+debug {
+  // Allows notification actions and window activation from Noctalia.
+  honor-xdg-activation-with-invalid-serial
+}
+
+window-rule {
+  match title="^(file_progress)$"
+  match title="^(confirm)$"
+  match title="^(dialog)$"
+  match title="^(download)$"
+  match title="^(notification)$"
+  match title="^(error)$"
+  match title="^(splash)$"
+  match title="^(confirmreset)$"
+  match title="^(Delete profile)$"
+  match title="^File Operation Progress$"
+  match title="^Confirm to replace files$"
+  match title="^KDE Connect URL handler$"
+  match title="^(Open File)(.*)$"
+  match title="^(Select a File)(.*)$"
+  match title="^(Choose wallpaper)(.*)$"
+  match title="^(Open Folder)(.*)$"
+  match title="^(Save As)(.*)$"
+  match title="^(Library)(.*)$"
+  match title="^(File Upload)(.*)$"
+  match title="^(.*)-Google$"
+  match title="^(.*)System Update$"
+  match app-id="^xdm-app$"
+  match app-id="^org.pulseaudio.pavucontrol$"
+  open-floating true
+}
+
+window-rule {
+  match app-id="org.telegram.desktop$"
+  match app-id="vesktop$"
+  match app-id="Thunar$"
+  match app-id="thunar$"
+  match app-id="obsidian$"
+  match app-id="Postman"
+  match app-id="firefox$"
+  match app-id="firefox-esr"
+  match app-id="^Godot UI$"
+  match app-id="^Godot$"
+  match app-id="steam_app_default"
+  open-maximized true
+}
+
+window-rule {
+  match app-id="steam" title=r"^notificationtoasts_\d+_desktop$"
+  default-floating-position x=10 y=10 relative-to="bottom-right"
+}
+
+
+/*
+ * ██╗  ██╗███████╗██╗   ██╗██████╗ ██╗███╗   ██╗██████╗ ███████╗
+ * ██║ ██╔╝██╔════╝╚██╗ ██╔╝██╔══██╗██║████╗  ██║██╔══██╗██╔════╝
+ * █████╔╝ █████╗   ╚████╔╝ ██████╔╝██║██╔██╗ ██║██║  ██║███████╗
+ * ██╔═██╗ ██╔══╝    ╚██╔╝  ██╔══██╗██║██║╚██╗██║██║  ██║╚════██║
+ * ██║  ██╗███████╗   ██║   ██████╔╝██║██║ ╚████║██████╔╝███████║
+ * ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═════╝ ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝
+ *
+ */
+
+binds {
+  // Help
+
+  Mod+Shift+Slash { show-hotkey-overlay; }
+
+  // Resize Windows
+  Mod+R { switch-preset-column-width; }
+
+  // Applications (Noctalia native + system)
+  Mod+Return { spawn "foot"; }
+  Mod+D { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+  Mod+B { spawn "firefox-esr"; }
+  Mod+M { spawn "thunar"; }
+  Mod+N { spawn-sh "noctalia msg panel-toggle control-center notifications"; }
+  Mod+Shift+N { spawn-sh "noctalia msg panel-toggle noctalia/notes:panel"; }
+
+  // Noctalia Clipboard (replaces fuzzel clipboard-menu)
+  Mod+V { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
+
+  // Noctalia Wallpaper Picker (replaces waypaper)
+  Mod+W { spawn "noctalia" "msg" "panel-toggle" "wallpaper"; }
+
+  // Next Wallpaper
+  Mod+Shift+W { spawn "noctalia" "msg" "wallpaper-next"; }
+
+  // Lock Screen
+  Mod+Shift+T { spawn "noctalia" "msg" "session" "lock"; }
+
+  // Noctalia Power Menu (replaces custom powermenu script)
+  Mod+Escape { spawn "noctalia" "msg" "panel-toggle" "session"; }
+
+  // Reload config
+  Mod+Shift+C { spawn "niri" "msg" "action" "load-config-file"; }
+
+  // Kill window
+  Mod+Q { close-window; }
+  
+  // Noctalia Settings
+  Mod+P { spawn-sh "noctalia msg settings-toggle"; }
+
+  // --- Screenshot Keybinds ---
+  // Screenshot Region
+  Mod+S { spawn "noctalia" "msg" "screenshot-region"; }
+
+  // Screenshot Fullscreen
+  Print { spawn "noctalia" "msg" "screenshot-fullscreen"; }
+
+
+  // Floating toggle
+  Mod+T { toggle-window-floating; }
+
+  // Noctalia OSD Controls (replaces swayosd and brightnessctl scripts)
+  // Volume Controls
+  XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
+  XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-down"; }
+  XF86AudioMute allow-when-locked=true { spawn "noctalia" "msg" "volume-mute"; }
+  XF86AudioMicMute allow-when-locked=true { spawn "noctalia" "msg" "mic-mute"; }
+
+
+
+  // Brightness Controls
+  XF86MonBrightnessUp allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
+  XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
+  Mod+Page_Up   { spawn "noctalia" "msg" "brightness-up"; }
+  Mod+Page_Down { spawn "noctalia" "msg" "brightness-down"; }
+
+  // Focus movement (vim + arrows)
+  Mod+H { focus-column-left; }
+  Mod+J { focus-window-down; }
+  Mod+K { focus-window-up; }
+  Mod+L { focus-column-right; }
+  Mod+Left  { focus-column-left; }
+  Mod+Down  { focus-window-down; }
+  Mod+Up    { focus-window-up; }
+  Mod+Right { focus-column-right; }
+
+  // Move windows (vim + arrows)
+  Mod+Shift+H { move-column-left; }
+  Mod+Shift+J { move-window-down; }
+  Mod+Shift+K { move-window-up; }
+  Mod+Shift+L { move-column-right; }
+  Mod+Shift+Left  { move-column-left; }
+  Mod+Shift+Down  { move-window-down; }
+  Mod+Shift+Up    { move-window-up; }
+  Mod+Shift+Right { move-column-right; }
+
+  // Workspaces
+  Mod+1 { focus-workspace "1"; }
+  Mod+2 { focus-workspace "2"; }
+  Mod+3 { focus-workspace "3"; }
+  Mod+4 { focus-workspace "4"; }
+  Mod+5 { focus-workspace "5"; }
+  Mod+6 { focus-workspace "6"; }
+  Mod+7 { focus-workspace "7"; }
+  Mod+8 { focus-workspace "8"; }
+  Mod+9 { focus-workspace "9"; }
+  Mod+0 { focus-workspace "0"; }
+  Mod+Shift+1 { move-column-to-workspace "1"; }
+  Mod+Shift+2 { move-column-to-workspace "2"; }
+  Mod+Shift+3 { move-column-to-workspace "3"; }
+  Mod+Shift+4 { move-column-to-workspace "4"; }
+  Mod+Shift+5 { move-column-to-workspace "5"; }
+  Mod+Shift+6 { move-column-to-workspace "6"; }
+  Mod+Shift+7 { move-column-to-workspace "7"; }
+  Mod+Shift+8 { move-column-to-workspace "8"; }
+  Mod+Shift+9 { move-column-to-workspace "9"; }
+  Mod+Shift+0 { move-column-to-workspace "0"; }
+
+  // Niri extras
+  Mod+F { fullscreen-window; }
+  Mod+Backslash { maximize-column; }
+  Mod+Tab { focus-workspace-previous; }
+  Mod+U { focus-workspace-down; }
+  Mod+I { focus-workspace-up; }
+  Mod+Ctrl+U { move-column-to-workspace-down; }
+  Mod+Ctrl+I { move-column-to-workspace-up; }
+  Mod+BracketLeft  { consume-or-expel-window-left; }
+  Mod+BracketRight { consume-or-expel-window-right; }
+  Mod+Comma  { consume-window-into-column; }
+  Mod+Period { expel-window-from-column; }
+  Mod+Alt+K { switch-preset-window-height; }
+  Mod+Alt+J { reset-window-height; }
+  Mod+Alt+Tab { toggle-column-tabbed-display; }
+  Mod+Alt+P { power-off-monitors; }
+  Mod+Ctrl+Q { quit skip-confirmation=true; }
+  Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+  Mod+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
+  Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+  Mod+Ctrl+WheelScrollUp cooldown-ms=150 { move-column-to-workspace-up; }
+  Mod+WheelScrollRight      { focus-column-right; }
+  Mod+WheelScrollLeft       { focus-column-left; }
+  Mod+Ctrl+WheelScrollRight { move-column-right; }
+  Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+  Mod+Shift+WheelScrollDown      { focus-column-right; }
+  Mod+Shift+WheelScrollUp        { focus-column-left; }
+  Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+  Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+  Mod+Alt+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+  // Noctalia Side Panel (quick access)
+  Mod+Alt+S { spawn "noctalia" "msg" "panel-toggle" "sidepanel"; }
+
+  // Noctalia Control Center (settings)
+  Mod+E { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
+}
+
+// Miscellaneous
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/%Y-%m-%d %H-%M-%S.png"
+
+hotkey-overlay {
+  skip-at-startup
+}
+
+// switch-events {
+//   lid-close { spawn "notify-send" "The laptop lid is closed!"; }
+//   lid-open  { spawn "notify-send" "The laptop lid is open!"; }
+// }
+
+cursor {
+  xcursor-theme "Fluent-dark-cursors"
+  xcursor-size 35
+  hide-when-typing
+}
+
+include "noctalia.kdl"

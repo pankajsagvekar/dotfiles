@@ -1,0 +1,8 @@
+[shell.screenshot]
+save_to_file = true
+copy_to_clipboard = true
+pipe_to_command = true
+pipe_command = "mkdir -p \"$HOME/Pictures/Screenshots\" && mv \"$NOCTALIA_SCREENSHOT_PATH\" \"$HOME/Pictures/Screenshots/$(basename \"$NOCTALIA_SCREENSHOT_PATH\")\""
+
+[audio]
+enable_overdrive = true  # Allows volume sliders and IPC to go up to 150%
